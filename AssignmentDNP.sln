@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryContracts", "Repo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InMemoryRepositories", "InMemoryRepositories\InMemoryRepositories.csproj", "{C627F81A-B707-4B76-B88C-75089D3A615D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ass2", "Ass2\Ass2.csproj", "{DCECB780-2A98-439F-BDD8-81F32EEEA673}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli", "Cli\Cli.csproj", "{DCECB780-2A98-439F-BDD8-81F32EEEA673}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
