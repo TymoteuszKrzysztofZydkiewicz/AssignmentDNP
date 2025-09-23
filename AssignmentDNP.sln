@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli", "Cli\Cli.csproj", "{D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileRepositories", "FileRepositories\FileRepositories.csproj", "{841E6471-18D6-4F8D-819F-158C8CFA2241}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileRepositories", "FileRepositories\FileRepositories.csproj", "{6C2F4822-CADA-4D76-9DE5-39D4BD2D7BD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileRepositories", "FileRepositories\FileRepositories.csproj", "{54243BD8-DD7E-4605-AC4F-DF9A96F3F956}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,5 +49,13 @@ Global
 		{841E6471-18D6-4F8D-819F-158C8CFA2241}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{841E6471-18D6-4F8D-819F-158C8CFA2241}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{841E6471-18D6-4F8D-819F-158C8CFA2241}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C2F4822-CADA-4D76-9DE5-39D4BD2D7BD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C2F4822-CADA-4D76-9DE5-39D4BD2D7BD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C2F4822-CADA-4D76-9DE5-39D4BD2D7BD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C2F4822-CADA-4D76-9DE5-39D4BD2D7BD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54243BD8-DD7E-4605-AC4F-DF9A96F3F956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54243BD8-DD7E-4605-AC4F-DF9A96F3F956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54243BD8-DD7E-4605-AC4F-DF9A96F3F956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54243BD8-DD7E-4605-AC4F-DF9A96F3F956}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
