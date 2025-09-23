@@ -1,16 +1,13 @@
 ﻿using Ass2.UI;
-using InMemoryRepositories;
+using FileRepositories;
 using RepositoryContracts;
-using Server.InMemoryRepositories;
 
-Console.WriteLine("App is starting...");
+Console.WriteLine("Starting CLI app...");
+IUserRepository userRepository = new UserFileRepository();
+ICommentRepository commentRepository = new CommentFileRepository();
+IPostRepository postRepository = new PostFileRepository();
 
-IUserRepository repository = new UserInMemoryRepository();
-
-ICommentRepository commentRepository = new CommentInMemoryRepository();
-
-IPostRepository postRepository = new PostInMemoryRepository();
-
-CliApp cliApp  = new CliApp(repository, commentRepository, postRepository);
+CliApp cliApp =
+    new CliApp(userRepository, commentRepository, postRepository);
 
 await cliApp.StartAsync();

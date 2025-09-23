@@ -1,11 +1,12 @@
 ﻿using System.Text.Json;
 using Entities;
+using RepositoryContracts;
 
 namespace FileRepositories;
 
-public class CommentFileRepository
-{  
-    private readonly string filePath = "comments.json";
+public class CommentFileRepository : ICommentRepository
+{
+    private readonly string filePath = "comments.txt";
 
     public CommentFileRepository()
     {
@@ -14,6 +15,7 @@ public class CommentFileRepository
             File.WriteAllText(filePath, "[]");
         }
     }
+
     public async Task<Comment> AddAsync(Comment comment)
     {
         string commentsAsJason = await File.ReadAllTextAsync(filePath);
@@ -25,6 +27,7 @@ public class CommentFileRepository
         await File.WriteAllTextAsync(filePath, commentsAsJason);
         return comment;
     }
+
     public async Task UpdateAsync(Comment comment)
     {
         string commentsAsJson = await File.ReadAllTextAsync(filePath);
@@ -42,6 +45,7 @@ public class CommentFileRepository
         commentsAsJson = JsonSerializer.Serialize(comments);
         await File.WriteAllTextAsync(filePath, commentsAsJson);
     }
+
     public async Task DeleteAsync(int id)
     {
         string commentsAsJson = await File.ReadAllTextAsync(filePath);
@@ -57,6 +61,7 @@ public class CommentFileRepository
         await File.WriteAllTextAsync(filePath, commentsAsJson);
 
     }
+
     public async Task<Comment> GetSingleAsync(int id)
     {
         string commentsAsJson = await File.ReadAllTextAsync(filePath);
@@ -70,7 +75,7 @@ public class CommentFileRepository
         return comment;
     }
 
-    public IQueryable<Comment> GetMany()
+    public IQueryable<Comment> GetManyAsync()
     {
         string commentsAsJson = File.ReadAllTextAsync(filePath).Result;
         List<Comment> comments = 
