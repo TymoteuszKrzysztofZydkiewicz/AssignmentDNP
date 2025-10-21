@@ -157,7 +157,12 @@ public class CreatePostView
     // add post to the repository.
     private async Task AddPostAsync(string title, string content, int userId)
     {
-        Post post = new(title, content, userId);
+        var post = new Post
+        {
+            Title = title,
+            Body = content,
+            UserId = userId
+        };
         Post added = await postRepository.AddAsync(post);
         Console.WriteLine("Post created successfully, with Id: " + added.Id);
     }

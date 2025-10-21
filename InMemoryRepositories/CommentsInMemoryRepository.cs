@@ -48,4 +48,6 @@ public class CommentInMemoryRepository : ICommentRepository
     }
 
     public IQueryable<Comment> GetManyAsync() => comments.AsQueryable();
+    
+    public IQueryable<Comment> GetAllForPost(int id) => comments.AsQueryable();
 }

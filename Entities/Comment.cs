@@ -6,10 +6,5 @@ public class Comment
     public int UserId { get; set; }
     public int PostId { get; set; }
     
-    public Comment(string content, int postId, int userId)
-    {
-        Content = content;
-        PostId = postId;
-        UserId = userId;
-    }
+  
 }

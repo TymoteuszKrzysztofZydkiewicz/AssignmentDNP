@@ -66,7 +66,12 @@ public class CreateComments
 
     private async Task AddCommentAsync(string body, int postId, int userId)
     {
-        Comment comment = new Comment(body, postId, userId);
+        var comment = new Comment
+        {
+            Content = body,
+            PostId = postId,
+            UserId = userId
+        };
         Comment toAdd = await commentRepository.AddAsync(comment);
         Console.WriteLine($"Added comment: {comment.Content}" + "  to the user with ID: "+toAdd.PostId);
         
