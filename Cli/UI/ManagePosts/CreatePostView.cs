@@ -114,6 +114,7 @@ public class CreatePostView
             Console.WriteLine("You are about to create a post.");
             Console.WriteLine("Do you want to proceed? (y/n)");
             string? confirmation = null;
+                
             while (true)
             {
                 confirmation = Console.ReadLine();

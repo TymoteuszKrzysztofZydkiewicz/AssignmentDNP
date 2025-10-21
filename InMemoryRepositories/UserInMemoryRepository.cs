@@ -48,4 +48,8 @@ public class UserInMemoryRepository : IUserRepository
     }
 
     public IQueryable<User> GetManyAsync() => users.AsQueryable();
+    public Task<User> GetByUsernameAsync(string username)
+    {
+        throw new NotImplementedException();
+    }
 }
