@@ -1,0 +1,40 @@
+﻿# =============== Rider / JetBrains ===============
+.idea/
+*.sln.iml
+shelf/
+workspace.xml
+projectSettingsUpdater.xml
+modules.xml
+.idea.AssignmentDNP.iml
+contentModel.xml
+dataSources/
+dataSources.local.xml
+/httpRequests/
+
+# =============== Build results ===============
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+[Tt]emp/
+
+# =============== .NET specific ===============
+*.user
+*.rsuser
+*.suo
+*.cache
+*.log
+
+# =============== Publish folders ===============
+/publish/
+/wwwroot/dist/
+/wwwroot/lib/bootstrap/dist/
+
+# =============== Packages ===============
+*.nupkg
+*.snupkg
+*.pdb
+
+# =============== OS / misc ===============
+.DS_Store
+Thumbs.db
