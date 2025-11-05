@@ -1,5 +1,38 @@
-bin/
-obj/
-/packages/
-riderModule.iml
+# =============== Rider / JetBrains ===============
+.idea/
+*.sln.iml
+*.iml
+/httpRequests/
 /_ReSharper.Caches/
+riderModule.iml
+
+# =============== Build results (.NET) ===============
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+[Tt]emp/
+*.cache
+*.log
+
+# =============== .NET user files ===============
+*.user
+*.rsuser
+*.suo
+
+# =============== Publish folders / Blazor ===============
+**/wwwroot/dist/
+**/wwwroot/lib/bootstrap/dist/
+publish/
+
+# =============== Packages and symbols ===============
+*.nupkg
+*.snupkg
+*.pdb
+
+# =============== OS / misc ===============
+.DS_Store
+Thumbs.db
+
+# =============== Optional backups ===============
+*.old.sln
