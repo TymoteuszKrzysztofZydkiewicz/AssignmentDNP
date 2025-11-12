@@ -1,0 +1,79 @@
+﻿@page "/posts"
+@using ApiContracts.Post
+@inject BlazorApp.Services.HttpPostsService PostsService
+@inject HttpUserService UserService
+
+<h2>Posts</h2>
+
+@if (error is not null)
+{
+    <p class="alert error">@error</p>
+}
+else if (loading)
+{
+    <p>Loading...</p>
+}
+else if (posts is null || posts.Count == 0)
+{
+    <p>No posts yet.</p>
+}
+else
+{
+    <ul class="post-list">
+        @foreach (var p in posts)
+        {
+            <li class="post-item">
+                <div class="post-main">
+                    <h3 class="post-title">@p.Title</h3>
+                    <p class="post-meta">by @GetAuthorName(p.AuthorId)</p>
+                </div>
+                <a class="btn btn-primary" href="@($"/posts/{p.Id}")">Show more</a>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private List<PostDto>? posts;
+    private bool loading = true;
+    private string? error;
+    private Dictionary<int, string> authorNames = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var dto = await PostsService.GetPostsAsync();
+            posts = dto;
+
+            foreach (var post in posts)
+            {
+                if (!authorNames.ContainsKey(post.AuthorId))
+                {
+                    try
+                    {
+                        var user = await UserService.GetUserAsync(post.AuthorId);
+                        authorNames[post.AuthorId] = user.Username;
+                    }
+                    catch
+                    {
+                        authorNames[post.AuthorId] = "Unknown";
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private string GetAuthorName(int authorId)
+    {
+        return authorNames.TryGetValue(authorId, out var name) ? name : "Unknown";
+    }
+}

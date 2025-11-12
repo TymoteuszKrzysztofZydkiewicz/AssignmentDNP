@@ -1,0 +1,13 @@
+﻿.post-details {
+    background:#fff; border:1px solid #e5e7eb; border-radius:12px;
+    padding:18px; max-width:760px;
+}
+.title { margin:0 0 6px; }
+.meta  { margin:0 0 16px; color:#666; }
+.content { white-space:pre-wrap; }
+.btn {
+    display:inline-block; margin-top:10px; padding:8px 14px; border-radius:8px;
+    background:#1b6ec2; color:#fff; text-decoration:none;
+}
+.btn:hover { background:#155a9e; }
+.alert.error { background:#f8d7da; color:#842029; padding:10px; border-radius:8px; }

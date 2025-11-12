@@ -1,0 +1,67 @@
+﻿@page "/register"
+@layout EmptyLayout
+@inject HttpUserService HttpUserService
+
+<PageTitle>Register</PageTitle>
+
+<div class="register-container">
+    <h1>Create Account</h1>
+
+    <div class="input-group">
+        <label>Username</label>
+        <input type="text" placeholder="Enter username" @bind="username" />
+    </div>
+
+    <div class="input-group">
+        <label>Password</label>
+        <input type="password" placeholder="Enter password" @bind="password" />
+    </div>
+
+    <button @onclick="Submit" class="btn-register">Register</button>
+
+    @if (showSuccess)
+    {
+        <p class="alert success">User created successfully</p>
+    }
+
+    @if (showError)
+    {
+        <p class="alert error">@errorMessage</p>
+    }
+
+</div>
+
+@code {
+    private string username = "";
+    private string password = "";
+    private bool showSuccess = false;
+    private bool showError = false;
+    private string? errorMessage;
+
+    private async Task Submit()
+    {
+        try
+        {
+            showSuccess = false;
+            showError = false;
+            errorMessage = null;
+
+            await HttpUserService.CreateAsync(new CreateUserDto
+            {
+                Username = username,
+                Password = password
+            });
+
+            showSuccess = true;
+            username = "";
+            password = "";
+        }
+        catch (Exception ex)
+        {
+            showError = true;
+            errorMessage = ex.Message; // <-- pokaż prawdziwy komunikat z API
+        }
+    }
+}
+
+}

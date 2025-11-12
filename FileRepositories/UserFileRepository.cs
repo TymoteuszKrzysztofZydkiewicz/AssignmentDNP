@@ -75,18 +75,31 @@ public class UserFileRepository : IUserRepository
         }
         return user;
     }
-    public async Task<User> GetByUsernameAsync(string username)
+    public async Task<User?> GetByUsernameAsync(string username)
     {
-        string usersAsJson = await File.ReadAllTextAsync(filePath);
-        List<User> users = JsonSerializer.Deserialize< List < User >> (usersAsJson);
-        
-        var user = users.SingleOrDefault(u => u.Username == username);
-        if (user is null)
+        if (!File.Exists(filePath))
         {
-            throw new KeyNotFoundException($"User with username '{username}' not found");
+            return null;
         }
+
+        string usersAsJson = await File.ReadAllTextAsync(filePath);
+
+        
+        if (string.IsNullOrWhiteSpace(usersAsJson))
+        {
+            return null;
+        }
+
+        var users = JsonSerializer.Deserialize<List<User>>(usersAsJson)
+                    ?? new List<User>();
+
+        var user = users.SingleOrDefault(u =>
+            u.Username.Equals(username, StringComparison.OrdinalIgnoreCase));
+
+        
         return user;
     }
+
 
     public IQueryable<User> GetManyAsync()
     {

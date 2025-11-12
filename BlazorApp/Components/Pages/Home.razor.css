@@ -1,0 +1,34 @@
+﻿.home-container {
+    text-align: center;
+    background: white;
+    padding: 40px 60px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.home-container h1 {
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+.home-container p {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.home-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.home-buttons .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.home-buttons .btn:hover {
+    transform: scale(1.05);
+}

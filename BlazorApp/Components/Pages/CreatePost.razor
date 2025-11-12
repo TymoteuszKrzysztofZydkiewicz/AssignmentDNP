@@ -1,0 +1,89 @@
+﻿@page "/posts/new"
+@using ApiContracts.Post
+@inject BlazorApp.Services.HttpPostsService PostsService
+@inject NavigationManager Nav
+
+<h2>Create Post</h2>
+
+@if (!string.IsNullOrEmpty(error))
+{
+    <p class="alert error">@error</p>
+}
+@if (!string.IsNullOrEmpty(success))
+{
+    <p class="alert success">@success</p>
+}
+
+<div class="post-form">
+    <div class="field">
+        <label>Title</label>
+        <input type="text" @bind="title" placeholder="Enter title" />
+    </div>
+
+    <div class="field">
+        <label>Content</label>
+        <textarea @bind="body" rows="6" placeholder="Write something..."></textarea>
+    </div>
+
+    <div class="field small">
+        <label>Author Id</label>
+        <input type="number" @bind="authorIdText" placeholder="e.g. 1" />
+    </div>
+
+    <div class="actions">
+        <button class="btn" @onclick="Submit" disabled="@busy">
+            @(busy ? "Saving..." : "Create")
+        </button>
+        <a class="btn ghost" href="/posts">Cancel</a>
+    </div>
+</div>
+
+@code {
+    // form state
+    private string title = "";
+    private string body = "";
+    private string authorIdText = "";
+    private bool busy = false;
+    private string? error;
+    private string? success;
+
+    private async Task Submit()
+    {
+        error = null; success = null;
+
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            error = "Title is required.";
+            return;
+        }
+        if (!int.TryParse(authorIdText, out var authorId) || authorId <= 0)
+        {
+            error = "Author Id must be a positive number.";
+            return;
+        }
+
+        busy = true;
+        try
+        {
+            var created = await PostsService.AddPostAsync(new CreatePostDto
+            {
+                // Uwaga: jeśli u Ciebie pole na treść nazywa się "Content", zmień "Body" -> "Content"
+                Title = title,
+                Body = body,
+                AuthorId = authorId
+            });
+
+            success = $"Post '{created.Title}' created (Id: {created.Id}).";
+            // opcjonalnie: od razu przejdź do listy
+            Nav.NavigateTo("/posts");
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+        }
+        finally
+        {
+            busy = false;
+        }
+    }
+}

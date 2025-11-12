@@ -1,0 +1,228 @@
+﻿@page "/posts/{id:int}"
+@using ApiContracts.Post
+@using ApiContracts.Comment
+@inject BlazorApp.Services.HttpPostsService PostsService
+@inject HttpUserService UserService
+@inject Services.HttpComentsService CommentService
+
+<div class="post-page">
+    <div class="post-details">
+        <h3 class="title">@post?.Title</h3>
+        <p class="meta">by @authorName</p>
+
+        @if (loadingPost)
+        {
+            <p>Loading post...</p>
+        }
+        else if (errorPost is not null)
+        {
+            <p class="alert error">@errorPost</p>
+        }
+        else if (post is not null)
+        {
+            @if (!string.IsNullOrWhiteSpace(post.Body))
+            {
+                <p class="content">@post.Body</p>
+            }
+            else if (!string.IsNullOrWhiteSpace(post.Body))
+            {
+                <p class="content">@post.Body</p>
+            }
+            else
+            {
+                <p class="content"><em>No content.</em></p>
+            }
+        }
+
+        <a href="/posts" class="btn back">Back to posts</a>
+    </div>
+
+    <div class="comments">
+        <h4>Comments</h4>
+
+        @if (loadingComments)
+        {
+            <p>Loading comments...</p>
+        }
+        else if (errorComments is not null)
+        {
+            <p class="alert error">@errorComments</p>
+        }
+        else if (comments is null || comments.Count == 0)
+        {
+            <p class="muted">No comments yet.</p>
+        }
+        else
+        {
+            <ul class="comment-list">
+                @foreach (var c in comments)
+                {
+                    <li class="comment-item">
+                        <div class="comment-header">
+                            <strong>@GetAuthorName(c.AuthorId)</strong>
+                        </div>
+                        @if (!string.IsNullOrWhiteSpace(c.Body))
+                        {
+                            <p>@c.Body</p>
+                        }
+                        else if (!string.IsNullOrWhiteSpace(c.Body))
+                        {
+                            <p>@c.Body</p>
+                        }
+                        else
+                        {
+                            <p><em>(empty)</em></p>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+
+        <div class="add-comment">
+            <h5>Add comment</h5>
+
+            @if (!string.IsNullOrEmpty(errorAdd))
+            {
+                <p class="alert error">@errorAdd</p>
+            }
+            @if (!string.IsNullOrEmpty(successAdd))
+            {
+                <p class="alert success">@successAdd</p>
+            }
+
+            <div class="form-row">
+                <label>Author Id</label>
+                <input type="number" @bind="authorIdText" placeholder="e.g. 1" />
+            </div>
+            <div class="form-row">
+                <label>Comment</label>
+                <textarea rows="4" @bind="commentText" placeholder="Write your comment..."></textarea>
+            </div>
+            <button class="btn" @onclick="SubmitComment" disabled="@busyAdd">
+                @(busyAdd ? "Saving..." : "Add comment")
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public int id { get; set; }
+
+    // post
+    private PostDto? post;
+    private string? authorName;
+    private bool loadingPost = true;
+    private string? errorPost;
+
+    // comments
+    private List<CommentDto>? comments;
+    private bool loadingComments = true;
+    private string? errorComments;
+
+    // add comment form
+    private string authorIdText = "";
+    private string commentText = "";
+    private bool busyAdd = false;
+    private string? errorAdd;
+    private string? successAdd;
+
+    // cache nazw autorów
+    private readonly Dictionary<int, string> authorNames = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadPostAndComments();
+    }
+
+    private async Task LoadPostAndComments()
+    {
+        loadingPost = true; errorPost = null;
+        loadingComments = true; errorComments = null;
+        successAdd = null; errorAdd = null;
+
+        // 1) Post + autor
+        try
+        {
+            post = await PostsService.GetPostAsync(id);
+
+            try
+            {
+                var user = await UserService.GetUserAsync(post.AuthorId);
+                authorName = user.Username;
+                authorNames[post.AuthorId] = user.Username;
+            }
+            catch { authorName = "Unknown"; }
+        }
+        catch (Exception ex) { errorPost = ex.Message; }
+        finally { loadingPost = false; }
+
+        // 2) Komentarze
+        try
+        {
+            var dto = await CommentService.GetCommentsAsync(id);
+            comments = dto;
+
+            // dociągnij nazwy autorów komentarzy (cache)
+            foreach (var c in comments)
+            {
+                if (!authorNames.ContainsKey(c.AuthorId))
+                {
+                    try
+                    {
+                        var u = await UserService.GetUserAsync(c.AuthorId);
+                        authorNames[c.AuthorId] = u.Username;
+                    }
+                    catch { authorNames[c.AuthorId] = "Unknown"; }
+                }
+            }
+        }
+        catch (Exception ex) { errorComments = ex.Message; }
+        finally { loadingComments = false; }
+    }
+
+    private string GetAuthorName(int authorId)
+        => authorNames.TryGetValue(authorId, out var name) ? name : "Unknown";
+
+    private async Task SubmitComment()
+    {
+        errorAdd = null; successAdd = null;
+
+        if (!int.TryParse(authorIdText, out var authorId) || authorId <= 0)
+        {
+            errorAdd = "Author Id must be a positive number.";
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(commentText))
+        {
+            errorAdd = "Comment cannot be empty.";
+            return;
+        }
+
+        busyAdd = true;
+        try
+        {
+            await CommentService.AddCommentAsync(new CreateCommentDto
+            {
+                PostId = id,
+                AuthorId = authorId,
+                Body = commentText // upewnij się, że nazwa pola odpowiada temu, co oczekuje API (Body vs Content)
+            });
+
+            successAdd = "Comment added.";
+            commentText = "";
+            await LoadPostAndComments();
+        }
+        catch (HttpRequestException httpEx)
+        {
+            // pokaż status + treść (jeśli serwis ją zwróci w Message)
+            var status = httpEx.StatusCode.HasValue ? $"{(int)httpEx.StatusCode} {httpEx.StatusCode}" : "no status code";
+            errorAdd = $"HTTP error: {status}. {httpEx.Message}";
+        }
+        catch (Exception ex)
+        {
+            errorAdd = ex.Message;
+        }
+        finally { busyAdd = false; }
+
+    }
+}

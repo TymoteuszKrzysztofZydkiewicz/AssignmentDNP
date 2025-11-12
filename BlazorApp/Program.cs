@@ -1,4 +1,5 @@
 using BlazorApp.Components;
+using BlazorApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,9 +9,11 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddScoped(sp => new HttpClient
 {
-    BaseAddress = new Uri("https://localhost:5013")
+    BaseAddress = new Uri("http://localhost:5013")
 });
-builder.Services.AddScoped<HttpUserService>();
+builder.Services.AddScoped <HttpUserService>();
+builder.Services.AddScoped <HttpPostsService>();
+builder.Services.AddScoped <HttpComentsService>();
 
 var app = builder.Build();
 

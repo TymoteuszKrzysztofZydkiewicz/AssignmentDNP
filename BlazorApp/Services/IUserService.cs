@@ -3,5 +3,9 @@ using ApiContracts;
 
 public interface IUserService
 {
-    Task<ReturnUserDto> CreateAsync(CreateUserDto dto);
+    public Task<ReturnUserDto> CreateAsync(CreateUserDto request);
+    public Task<IResult> GetUsers();
+    public Task<IResult> UpdateUserAsync();
+    public Task<IResult> DeleteUserAsync();
+    public Task<ReturnUserDto> GetUserAsync(int userId);
 }

@@ -1,0 +1,14 @@
+﻿.post-form { max-width: 640px; background:#fff; padding:18px; border:1px solid #e5e7eb; border-radius:12px; }
+.field { margin-bottom:14px; }
+.field.small { max-width: 220px; }
+label { display:block; margin-bottom:6px; font-weight:600; }
+input, textarea {
+    width:100%; padding:10px; border:1px solid #cfcfcf; border-radius:8px;
+}
+.actions { display:flex; gap:10px; margin-top:10px; }
+.btn { background:#1b6ec2; color:#fff; border:none; padding:10px 16px; border-radius:8px; cursor:pointer; }
+.btn[disabled]{ opacity:.6; cursor:default; }
+.btn.ghost { background:transparent; color:#1b6ec2; border:1px solid #1b6ec2; text-decoration:none; padding:9px 15px; border-radius:8px; }
+.alert { margin-bottom:12px; padding:10px; border-radius:8px; }
+.alert.error { background:#f8d7da; color:#842029; }
+.alert.success { background:#d1e7dd; color:#0f5132; }

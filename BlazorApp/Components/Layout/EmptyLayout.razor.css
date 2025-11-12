@@ -1,0 +1,15 @@
+﻿.empty-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+}
+
+footer {
+    background: #ffffff;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    padding: 10px;
+    color: #777;
+}
