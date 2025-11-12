@@ -1,6 +1,7 @@
 ﻿@page "/register"
 @layout EmptyLayout
 @inject HttpUserService HttpUserService
+@inject NavigationManager navMgr
 
 <PageTitle>Register</PageTitle>
 
@@ -21,7 +22,11 @@
 
     @if (showSuccess)
     {
-        <p class="alert success">User created successfully</p>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> User created successfully.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+                    @onclick="OnAlertClosed"></button>
+        </div>
     }
 
     @if (showError)
@@ -37,6 +42,12 @@
     private bool showSuccess = false;
     private bool showError = false;
     private string? errorMessage;
+
+    private void OnAlertClosed()
+    {
+        showSuccess = false;
+        navMgr.NavigateTo("/login");
+    }
 
     private async Task Submit()
     {

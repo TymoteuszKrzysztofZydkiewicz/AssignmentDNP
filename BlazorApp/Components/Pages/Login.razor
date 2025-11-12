@@ -1,31 +1,81 @@
 ﻿@page "/login"
-@inject NavigationManager Navigation
+@using BlazorApp1.Auth
 @layout EmptyLayout
+@inject AuthenticationStateProvider AuthProvider
+@inject NavigationManager navMgr
 
 <PageTitle>Login</PageTitle>
 
-<div class="login-container">
-    <h1>Log In</h1>
+<AuthorizeView>
+    <NotAuthorized>
+        <div class="login-container">
+            <h2>Welcome back</h2>
+            <p class="muted">Sign in to continue</p>
 
-    <div class="input-group">
-        <label>Username</label>
-        <input type="text" placeholder="Enter username" @bind="username" />
-    </div>
+            <div class="input-group">
+                <label for="username">User name</label>
+                <input id="username" type="text" @bind="username" placeholder="e.g. johndoe" @onkeydown="HandleEnter" />
+            </div>
 
-    <div class="input-group">
-        <label>Password</label>
-        <input type="password" placeholder="Enter password" @bind="password" />
-    </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input id="password" type="password" @bind="password" placeholder="••••••••" @onkeydown="HandleEnter" />
+            </div>
 
-    <button class="btn-login" @onclick="LoginClicked">Log In</button>
-</div>
+            @if (!string.IsNullOrEmpty(errorLabel))
+            {
+                <div style="color:#b00020; margin-bottom:10px;">@errorLabel</div>
+            }
+
+            <button class="btn-login" @onclick="LoginAsync" disabled="@busy">
+                @(busy ? "Logging in..." : "Log in")
+            </button>
+        </div>
+    </NotAuthorized>
+
+    <Authorized>
+        <div class="login-container">
+            <h3>You’re already signed in.</h3>
+            <button class="btn-login" @onclick="@(()=> navMgr.NavigateTo("/posts"))">Go to posts</button>
+        </div>
+    </Authorized>
+</AuthorizeView>
 
 @code {
-    private string username = "";
-    private string password = "";
+    private string username = string.Empty;
+    private string password = string.Empty;
+    private string? errorLabel;
+    private bool busy = false;
 
-    private void LoginClicked()
+    private async Task LoginAsync()
     {
-        Navigation.NavigateTo("/posts");
+        errorLabel = null;
+
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+        {
+            errorLabel = "Please enter user name and password.";
+            return;
+        }
+
+        busy = true;
+        try
+        {
+            await ((SimpleAuthProvider)AuthProvider).Login(username.Trim(), password);
+            navMgr.NavigateTo("/posts", forceLoad: false); // ✅ po zalogowaniu idziemy na /posts
+        }
+        catch (Exception e)
+        {
+            errorLabel = $"Error: {e.Message}";
+        }
+        finally
+        {
+            busy = false;
+        }
+    }
+
+    private async Task HandleEnter(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !busy)
+            await LoginAsync();
     }
 }

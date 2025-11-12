@@ -2,9 +2,17 @@
 @using ApiContracts.Post
 @inject BlazorApp.Services.HttpPostsService PostsService
 @inject HttpUserService UserService
+<AuthorizeView>
+    
+    <NotAuthorized>
+        @layout EmptyLayout
+        <p> You need log in to see posts</p>
+        <a href="/register">If you dont have account you can create one</a>
+    </NotAuthorized>
+    <Authorized>
+        <h3>Hello, @context.User.Identity.Name</h3> 
 
 <h2>Posts</h2>
-
 @if (error is not null)
 {
     <p class="alert error">@error</p>
@@ -32,6 +40,8 @@ else
         }
     </ul>
 }
+    </Authorized>
+</AuthorizeView>
 
 @code {
     private List<PostDto>? posts;
