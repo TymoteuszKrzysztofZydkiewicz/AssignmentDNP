@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Entities;
+﻿using Entities;
 using RepositoryContracts;
 
-namespace Server.InMemoryRepositories;
+namespace InMemoryRepositories;
 
 public class CommentInMemoryRepository : ICommentRepository
 {

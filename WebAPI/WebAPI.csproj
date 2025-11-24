@@ -8,11 +8,16 @@
     <!-- No Swagger packages -->
     <ItemGroup>
         <ProjectReference Include="..\ApiContracts\ApiContracts.csproj" />
+        <ProjectReference Include="..\EfcRepository\EfcRepository.csproj" />
         <ProjectReference Include="..\Entities\Entities.csproj" />
         <ProjectReference Include="..\FileRepositories\FileRepositories.csproj" />
         <ProjectReference Include="..\RepositoryContracts\RepositoryContracts.csproj" />
     </ItemGroup>
     <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PrivateAssets>all</PrivateAssets>
+      </PackageReference>
       <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
     </ItemGroup>
 </Project>

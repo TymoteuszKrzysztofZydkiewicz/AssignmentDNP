@@ -1,4 +1,4 @@
-﻿namespace ApiContracts.Auth;
+﻿namespace ApiContracts.Login;
 
 public class LoginRequest
 {

@@ -1,5 +1,6 @@
 ﻿using ApiContracts;
-using ApiContracts.Auth;
+using ApiContracts.Login;
+using ApiContracts.User;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryContracts;

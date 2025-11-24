@@ -7,5 +7,10 @@ public class Post
     public string Title { get; set; }
     public int UserId { get; set; }
 
+    public Post (){}
+    
+    public User User { get; set; }
+
+    public ICollection<Comment> Comments { get; set; }
 
 }

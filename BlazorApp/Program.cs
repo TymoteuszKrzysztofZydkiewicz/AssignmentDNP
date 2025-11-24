@@ -1,6 +1,6 @@
+using BlazorApp.Auth;
 using BlazorApp.Components;
 using BlazorApp.Services;
-using BlazorApp1.Auth;
 using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);

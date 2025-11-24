@@ -1,5 +1,5 @@
 ﻿@page "/login"
-@using BlazorApp1.Auth
+@using BlazorApp.Auth
 @layout EmptyLayout
 @inject AuthenticationStateProvider AuthProvider
 @inject NavigationManager navMgr
@@ -61,7 +61,7 @@
         try
         {
             await ((SimpleAuthProvider)AuthProvider).Login(username.Trim(), password);
-            navMgr.NavigateTo("/posts", forceLoad: false); // ✅ po zalogowaniu idziemy na /posts
+            navMgr.NavigateTo("/posts", forceLoad: false); 
         }
         catch (Exception e)
         {

@@ -1,5 +1,6 @@
-﻿using System.Threading.Tasks;
-using ApiContracts;
+﻿using ApiContracts.User;
+
+namespace BlazorApp.Services;
 
 public interface IUserService
 {

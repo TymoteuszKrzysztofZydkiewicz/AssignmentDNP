@@ -1,6 +1,7 @@
 ﻿@page "/posts/{id:int}"
 @using ApiContracts.Post
 @using ApiContracts.Comment
+@using BlazorApp.Services
 @inject BlazorApp.Services.HttpPostsService PostsService
 @inject HttpUserService UserService
 @inject Services.HttpComentsService CommentService

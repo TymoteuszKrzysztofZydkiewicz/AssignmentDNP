@@ -1,10 +1,10 @@
 ﻿using System.Security.Claims;
 using System.Text.Json;
-using ApiContracts;
-using ApiContracts.Auth;
+using ApiContracts.Login;
+using ApiContracts.User;
 using Microsoft.AspNetCore.Components.Authorization;
 
-namespace BlazorApp1.Auth;
+namespace BlazorApp.Auth;
 
 public class SimpleAuthProvider : AuthenticationStateProvider
 {

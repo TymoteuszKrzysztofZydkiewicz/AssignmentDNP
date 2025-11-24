@@ -1,4 +1,4 @@
-﻿namespace ApiContracts;
+﻿namespace ApiContracts.User;
 
 public class UserDto
 {

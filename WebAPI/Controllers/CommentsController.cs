@@ -1,11 +1,9 @@
-﻿using ApiContracts;
-using ApiContracts.Comment;
-using ApiContracts.Post;
+﻿using ApiContracts.Comment;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryContracts;
 
-namespace WebApplication1.Controllers;
+namespace WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]

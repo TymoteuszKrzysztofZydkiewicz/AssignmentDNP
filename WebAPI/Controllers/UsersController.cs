@@ -1,4 +1,5 @@
 ﻿using ApiContracts;
+using ApiContracts.User;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryContracts;

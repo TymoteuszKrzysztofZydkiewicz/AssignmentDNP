@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using System.Net.Http.Json; 
-using ApiContracts; 
-using System.Threading.Tasks;
+using ApiContracts.User;
+
+namespace BlazorApp.Services;
 
 public class HttpUserService : IUserService
 {
